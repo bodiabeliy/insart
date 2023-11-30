@@ -1,0 +1,45 @@
+@import "reset";
+@import "variables/global";
+@import "themes/normal";
+@import "themes/dark";
+@import "bootstrap/resetDefault";
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+body {
+    font: var(--font-m);
+}
+.app {
+    background: var(--bg-color);
+    color: var(--primary-color);
+
+    min-height: 100vh;
+}
+button {
+    color: var(--primary-color);
+}
+svg {
+    margin-right: 5px;
+}
+.content-page {
+    display: flex;
+}
+
+.page-wrapper {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+.main-page {
+    background-color: var(--main-page);
+    height: 100vh;
+}
+
+#dropdown-button-drop-up {
+
+    &::after {
+        display: none;
+    }
+}
+

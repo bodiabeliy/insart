@@ -1,0 +1,46 @@
+.Sidebar {
+    height: calc(100vh - var(--navbar-height));
+    width: var(--sidebar-width);
+    background: var(--bg-color);
+    box-shadow:inset -15px 0px 10px -15px var(--secondary-color);
+    position: relative;
+    transition: width 0.3s;
+}
+
+.sideMenu {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+}
+.sideMenuLink {
+    margin-top: 15px;
+    &::after {
+        content : "";
+         position : relative; 
+         display: flex;
+         width : 0%; 
+         left : 0;
+         bottom: -10px;
+         transition: 0.3s;
+    }
+    &:hover:after {
+        content : "";
+         position : relative; 
+         display: flex;
+         background-color : var(--third-color); 
+         height :3px; 
+         width : 60%; 
+         left : 40px;
+         bottom: -10px;
+    }
+}
+//
+
+.collapsed {
+    width: var(--sidebar-width-collapsed);
+}
+
+

@@ -1,0 +1,49 @@
+.Navbar {
+    width: 100%;
+    height: var(--navbar-height);
+    background: var(--bg-color);
+    box-shadow:inset 0px -15px 10px -15px var(--secondary-color);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.links {
+    margin-left: auto;
+}
+
+.RegisterLink {
+    margin-right:30px;
+}
+.logo {
+    display: flex;
+    margin-left: 200px;
+}
+.logoText {
+    text-transform: uppercase;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.logoText,
+.navbar_username {
+    color: var(--third-color);
+
+}
+
+.borderd {
+    margin-left: 10px;
+    padding: 3px;
+    border: 1px solid var(--third-color);
+    border-radius: 10px;
+
+}
+
+.switchers {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.lang {
+    margin-left: 20px;
+}
