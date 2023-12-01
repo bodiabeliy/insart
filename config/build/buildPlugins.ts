@@ -16,7 +16,7 @@ export function buildPlugins({paths, isDev}: BuildOptions): webpack.WebpackPlugi
         }),
         new webpack.DefinePlugin({
             __IS_DEV__: JSON.stringify(isDev),
-             __IPDATA_URL:JSON.stringify("https://api.ipdata.co/203.100.0.51/"),
+             __PRIVAT24_URL:JSON.stringify("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=4"),
             __ONEFORGE_URL:JSON.stringify("https://api.1forge.com"),
             __IPDATA_API_KEY:JSON.stringify("4f365326c3a7515e3cc57de37dacf37600ffbc59df4b35b81613921e"),
             __ONEFORGE_API_KEY:JSON.stringify("MbKDyaf85a9WntcaYjbK8fOl2ROkCem1") 

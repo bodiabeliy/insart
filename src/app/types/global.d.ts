@@ -15,7 +15,7 @@ declare module "*.svg" {
 }
 
 declare const __IS_DEV__: boolean;
-declare const  __IPDATA_URL: string;
+declare const  __PRIVAT24_URL: string;
 declare const __ONEFORGE_URL:string;
 declare const __IPDATA_API_KEY:string;
 declare const __ONEFORGE_API_KEY:string;

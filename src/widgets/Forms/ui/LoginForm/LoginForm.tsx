@@ -8,8 +8,6 @@ import { Button } from "shared/ui/Button/Button";
 import cls from "./LoginForm.module.scss";
 import { Select } from "shared/ui/Select/Select";
 import { useCurrenciesState } from "app/providers/storeProvider";
-import { converter } from "shared/lib/currenciesData/currenciesData";
-import { log } from "console";
 
 interface LoginFormProps {
   formType?: string;
@@ -20,7 +18,6 @@ export const LoginForm: FC<LoginFormProps> = memo(() => {
   const currenciesSelect2List = useCurrenciesState((state:any) => state.currenciesSelectList)
   const getCurrencyExchange = useCurrenciesState((state:any) => state.getCurrencyExchange)
   const currencyData = useCurrenciesState((state:any) => state.currencyData)
-console.log("currencyData", currencyData);
 
 
   const { t } = useTranslation();
@@ -71,13 +68,13 @@ console.log("currencyData", currencyData);
     
 
     if (Number(username) <10)
-      newErrors.username = t("миним > 10");
-    if (!username || username === "") newErrors.username = t("поле поточной валюти не может біть пумтім!");
+      newErrors.username = t("errorMinConfirmation");
+    if (!username || username === "") newErrors.username = t("errorTextConfirmation");
 
     if (Number(userpassword) <10)
-      newErrors.userpassword = t("миним > 10");
+      newErrors.userpassword = t("errorMinConfirmation");
     if (!userpassword || userpassword === "")
-      newErrors.userpassword = t("поле конверт валюти не может біть пумтім!");
+      newErrors.userpassword = t("errorTextConfirmation");
 
     return newErrors;
   };
@@ -112,7 +109,7 @@ console.log("currencyData", currencyData);
           <Form.Control
             required
             type="number"
-            placeholder="Example: 2.45"
+            placeholder={t("Placeholder")}
             value={form.username}
             onChange={(e) => setField("username", e.target.value)}
             isInvalid={!!errors.username}
@@ -131,7 +128,7 @@ console.log("currencyData", currencyData);
           <Form.Control
             required
             type="pumber"
-            placeholder="Example: 4.5"
+            placeholder={t("Placeholder")}
             value={form.userpassword}
             onChange={(e) => setField("userpassword", e.target.value)}
             isInvalid={!!errors.userpassword}

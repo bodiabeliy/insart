@@ -1,17 +1,9 @@
 {
-  "MainPage": "Main page",
-  "RegisterLink": "Registration",
-  "LoginLink": "Login",
-  "LogoutLink":"Logout",
-  "Languages": "English",
-  "Orders":"Orders",
-  "Products":"Products",
-  "registrationFormName":"Registration",
-  "authorizationFormName": "Authorization",
+  "MainPage": "Currency Convertor",
+  "Languages": "Eng",
+  "errorTextConfirmation":"Field not must be empty!",
+  "errorMinConfirmation":"Min must be above 10!",
 
-  "userName":"Login",
-  "userPassword":"Password",
-  "Logout":"Logout",
-  "currentSession":"User",
-  "countSession":"sesstion count"
+  "Placeholder":"Example 2.5...",
+  "currentSession":"Пользователь"
 }

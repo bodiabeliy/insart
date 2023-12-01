@@ -7,15 +7,3 @@ export const transformCurrencyList = (basicArray:any[]):any[] => {
     return resultArray
 }
 
-export  const converter = (direction:string, toCurrency:any, exchangeRate:any):any => {
-    console.log("toCurrency * exchangeRate", toCurrency * exchangeRate);
-
-    if (direction ="from->to") {
-        
-        return toCurrency * exchangeRate
-    }
-    if (direction ="to->from") {
-        return toCurrency * exchangeRate
-    }
-
-}

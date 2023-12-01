@@ -14,13 +14,27 @@ export const useCurrenciesState = create(
         },
         isLoading:false,
         
-        getCurrencyList: async() => { 
+        getCurrencySelectList: async() => { 
           set({isLoading:true})           
            
           try {
 
              const response = await axios.get(`${__ONEFORGE_URL}/symbols?api_key=${__ONEFORGE_API_KEY}`);
             set({currenciesSelectList:transformCurrencyList(response.data)})
+            set({isLoading:false})
+
+          } catch (error) {
+              
+          }
+        },
+
+        getCurrencies: async() => { 
+          set({isLoading:true})           
+           
+          try {
+
+             const response = await axios.get(`${__PRIVAT24_URL}`);
+            set({currenciesList:response.data})
             set({isLoading:false})
 
           } catch (error) {
@@ -48,7 +62,7 @@ export const useCurrenciesState = create(
         getCCurrentCurrency: async() => {
 
           try {
-            const response = await axios.get(`${__IPDATA_URL}/currency?api-key=${__IPDATA_API_KEY}`)
+            const response = await axios.get(`${__PRIVAT24_URL}/currency?api-key=${__IPDATA_API_KEY}`)
 
           } catch (error) {
               

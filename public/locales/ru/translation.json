@@ -1,17 +1,9 @@
 {
-  "MainPage": "Главная страница",
-  "RegisterLink": "Регистрация",
-  "LoginLink": "Войти",
-  "LogoutLink":"Выйти",
-  "Languages": "Русский",
-  "Orders":"Заказы",
-  "Products":"Продукты",
-  "registrationFormName":"Регистрация",
-  "authorizationFormName": "Авторизация",
+  "MainPage": "Конвертер валют",
+  "Languages": "Укр",
+  "errorTextConfirmation":"Поле конветації не повинно бути порожнім!",
+  "errorMinConfirmation":"Мінімальне значення не повинно бути меншим за 10!!",
 
-  "userName":"Логин пользователя",
-  "userPassword":"Пароль пользователя",
-  "Logout":"Выход",
-  "currentSession":"Пользователь",
-  "countSession":"Кол-во сесий"
+  "Placeholder":"Наприклад 2.5...",
+  "currentSession":"Пользователь"
 }

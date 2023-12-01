@@ -1,0 +1,12 @@
+.currencyTable {
+    max-width: 300px;
+    overflow-x: scroll;
+}
+.tableHeader {
+    display: flex;
+    padding: 10px;
+    background-color: var(--secondary-color);
+}
+.tableBody {
+    padding: 10px;
+}
