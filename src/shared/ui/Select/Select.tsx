@@ -16,9 +16,9 @@ export const Select = ({className, options, value, onChange, defaultValue}:Selec
             value={value}
             onChange={event => onChange(event.target.value)}
         >
-            <option disabled value="">{defaultValue}</option>
+            <option disabled value="default">{defaultValue}</option>
             {options.map((option:any) => (
-                <option value={option.value}>{option.name}</option>
+                <option key={option} value={option}>{option}</option>
             ))}
         </select>
      );

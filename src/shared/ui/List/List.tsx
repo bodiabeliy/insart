@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Dropdown } from 'react-bootstrap';
-import Order, { ColumnsProps } from 'app/providers/storeProvider/types';
 import cls from "./List.module.scss"
 import { ActionButton } from '../ActionButton';
 import { Modal } from '../Modal/Modal';
@@ -10,35 +9,23 @@ import { RemovePopup } from 'widgets/RemovePopup/ui/RemovePopup';
 import { useEffect, useState } from 'react';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { DateTimeFormmater } from 'shared/lib/dateFormater/dateFormater';
 import TrashIcon from 'shared/assets/icons/trash.svg';
 
 
 
 interface ListProps {
   pageName:string;
-  columns:ColumnsProps[]
+  columns:any[]
   dataItem?:any
 }
 
 export const List =({pageName, columns, dataItem}:ListProps) => {
   const { t, i18n } = useTranslation("orders");
   const [iszModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [remove, setRemove] = useState<Order>(null)
+  const [remove, setRemove] = useState<any>(null)
   const [monthByMonths, setMonthByMonths] = useState("")
-  const [fullDate, setFulldate] = useState("")
 
-
-  useEffect(() => {
-    setMonthByMonths(DateTimeFormmater(dataItem.date).monthByMonths)
-  }, [monthByMonths])
-
-  useEffect(() => {
-    setFulldate(DateTimeFormmater(dataItem.date).transformedDate)
-  }, [fullDate])
-
-
-    const RemoveOrder =(orderObject:Order) => {
+    const RemoveOrder =(orderObject:any) => {
       setIsModalOpen(true)
       setRemove(orderObject)
       
@@ -76,7 +63,7 @@ export const List =({pageName, columns, dataItem}:ListProps) => {
               <div className={classNames(cls[`colunm-${indx}`], {}, [cls[column.name]])}>
                 <sub>{monthByMonths}</sub>
                 <div className="span">
-                  {fullDate}
+                x
                 </div>
               </div> 
               : indx ==3 ? 
@@ -113,7 +100,7 @@ export const List =({pageName, columns, dataItem}:ListProps) => {
               <div className={classNames(cls[`colunm-${indx}`], {}, [cls[column.name]])}>
                 <sub>{monthByMonths}</sub>
                 <div className="span">
-                  {fullDate}
+               a
                 </div>
               </div> 
               : indx ==3 ? 

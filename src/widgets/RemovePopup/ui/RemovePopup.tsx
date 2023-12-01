@@ -6,7 +6,6 @@ import { Button } from "shared/ui/Button/Button";
 import { classNames } from "shared/lib/classNames/classNames";
 
 import cls from "./RemovePopup.module.scss"
-import Order from "app/providers/storeProvider/types";
 import {Image} from "shared/ui/Image/Image"
 import TrashIcon from 'shared/assets/icons/trash.svg';
 import MockMonitor from 'shared/assets/icons/monitor.jpg';

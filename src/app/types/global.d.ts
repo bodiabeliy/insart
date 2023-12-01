@@ -2,8 +2,7 @@ declare module '*.scss' {
     interface IClassNames {
         [className: string]: string
     }
-    const classNames: IClassNames;
-    export = classNames;
+    export const classNames: IClassNames;
 }
 
 declare module "*.png";
@@ -16,5 +15,9 @@ declare module "*.svg" {
 }
 
 declare const __IS_DEV__: boolean;
-declare const __BASE_URL: string;
+declare const  __IPDATA_URL: string;
+declare const __ONEFORGE_URL:string;
+declare const __IPDATA_API_KEY:string;
+declare const __ONEFORGE_API_KEY:string;
+
 

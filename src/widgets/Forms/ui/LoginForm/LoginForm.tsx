@@ -1,187 +1,146 @@
 import { FC, useState, useCallback, useEffect, memo } from "react";
-import { useSelector, useDispatch } from 'react-redux'
 
-import Col from 'react-bootstrap/Col';
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/esm/Form";
 import { useTranslation } from "react-i18next";
 import { Button } from "shared/ui/Button/Button";
 
-import cls from "./LoginForm.module.scss"
+import cls from "./LoginForm.module.scss";
+import { Select } from "shared/ui/Select/Select";
+import { useCurrenciesState } from "app/providers/storeProvider";
+import { converter } from "shared/lib/currenciesData/currenciesData";
+import { log } from "console";
 
 interface LoginFormProps {
-    formType?:string
+  formType?: string;
 }
 
+export const LoginForm: FC<LoginFormProps> = memo(() => {
+  const currenciesSelect1List = useCurrenciesState((state:any) => state.currenciesSelectList)
+  const currenciesSelect2List = useCurrenciesState((state:any) => state.currenciesSelectList)
+  const getCurrencyExchange = useCurrenciesState((state:any) => state.getCurrencyExchange)
+  const currencyData = useCurrenciesState((state:any) => state.currencyData)
+console.log("currencyData", currencyData);
 
 
-export const LoginForm:FC<LoginFormProps> = memo(({formType}) => {
-    const { t, i18n } = useTranslation();
-    const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const [form, setForm] = useState({
+    username: "",
+    userpassword: "",
+  });
+  const [errors, setErrors] = useState<any>({
+    username: "",
+    userpassword: "",
+  });
 
-    const handleSubmit = (e:any) => {
-     e.preventDefault()
+  const [selectCurrencyValue, setSelectCurrencyValue] = useState("USD")
+  const [selectCurrencyValue2, setSelectCurrencyValue2] = useState("EUR")
 
-     
-     const newErrors = findFormErrors()
-    if ( Object.keys(newErrors).length > 0 ) {
-      setErrors(newErrors)
+  useEffect(() => {
+    const newErrors = findFormErrors();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     }
-    if (formType =="registrationForm") {
-      //@ts-ignore
-      dispatch(registerUser(form.username, form.userpassword))
-    }
-    if (formType =="loginForm") {
-      //@ts-ignore
-      dispatch(loginUser(form.username, form.userpassword))
-      
-    }
+  }, [form.username, form.userpassword])
+
+  const setField = (field: any, value: any) => {    
+   
+    setForm({ ...form, [field]: value });
+   
+    // Check and see if errors exist, and remove them from the error object:
+    if (!!errors[field])
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
+      if (field =="username") {
+        getCurrencyExchange(selectCurrencyValue, selectCurrencyValue2, value)
+      }
+      if (field =="userpassword") {
+        getCurrencyExchange(selectCurrencyValue2, selectCurrencyValue, value)
+      }
+    return { field, form };
+  };
+
+  const findFormErrors = () => {
+    const { username, userpassword } = form;
+    const newErrors = {
+      username: "",
+      userpassword: "",
     };
     
-    const [ form, setForm ] = useState({
-      username:"",
-      userpassword:""
 
-    })
-    const [ errors, setErrors ] = useState<any>({
-      username:"",
-      userpassword:""
-    })
+    if (Number(username) <10)
+      newErrors.username = t("миним > 10");
+    if (!username || username === "") newErrors.username = t("поле поточной валюти не может біть пумтім!");
+
+    if (Number(userpassword) <10)
+      newErrors.userpassword = t("миним > 10");
+    if (!userpassword || userpassword === "")
+      newErrors.userpassword = t("поле конверт валюти не может біть пумтім!");
+
+    return newErrors;
+  };
 
 
-    const setField = (field:any, value:any) => {
-      
-      setForm({...form, [field]: value })
-
-      // Check and see if errors exist, and remove them from the error object:
-      if ( !!errors[field] ) setErrors({
-        ...errors,
-        [field]: null
-      })
-      console.log({field, form});
-      
-      return {field, form}
-    }
-
-    const findFormErrors = () => {
-      const { username, userpassword } = form
-      const newErrors = {
-        username:"",
-        userpassword:""
-      }
-      const regexEmailExpression = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/;
-      const regexPasswordExpresstion = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-
-      if (!regexEmailExpression.test(username))  newErrors.username = t("invalidEmailError") 
-      if ( !username || username === '' ) newErrors.username = t("emptyEmailError")
-
-      if (!regexPasswordExpresstion.test(userpassword))  newErrors.userpassword = t("invalidPasswordError")
-      if ( !userpassword || userpassword === '' ) newErrors.userpassword = t("emptyPasswordError")
-     
   
-      return newErrors
-  }
+  const changeCurrency = useCallback((selectedValue) => {
+    setSelectCurrencyValue(selectedValue)
+    getCurrencyExchange(selectedValue, selectCurrencyValue2, form.username)
+    // console.log("ss1", {selectedValue, selectCurrencyValue2, form});
 
-    return ( 
+  }, [form.username, selectCurrencyValue2])
+
+  const changeCurrency2 = useCallback((selectedValue) => {
+    // console.log("ss2", {selectedValue, selectCurrencyValue, form});
+    
+    setSelectCurrencyValue2(selectedValue)
+    getCurrencyExchange(selectedValue, selectCurrencyValue, form.userpassword)
+  }, [form.userpassword, selectCurrencyValue])
+
+  return (
     <>
-      {
-        formType =="registrationForm" ?
-        // <FormContainer 
-        //   registrationFormName={t("registrationFormName")} 
-        //   registrationFormNameGroups={[
-        //     {
-        //       FieldLabel:"Login",
-        //       FieldType:"email",
-        //       FieldPlaceholder:"test@gmail.com",
-        //       FieldValue:form.username,
-        //       FieldChange:((e) => setForm({...form, username:e.target.value})),
-        //       FieldIsValid:!!errors.username
-
-        //     },
-        //     {
-        //       FieldLabel:"Password",
-        //       FieldType:"password",
-        //       FieldPlaceholder:"Dfgfbvv_2",
-        //       FieldValue:form.userpassword,
-        //       FieldChange:((e) => setField('userpassword', e.target.value)),
-        //       FieldIsValid:!!errors.userpassword
-
-        //     }
-        //   ]}
-        //  />
-        <Form>
-          <h1>{t("registrationFormName")}</h1>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
-            <Form.Label>{t("userName")}</Form.Label>
-            <Form.Control
-              required
-              type="email"
-              placeholder="test@gmail.com"
-              value={form.username}
-              onChange={e => setField('username', e.target.value) }
-              isInvalid={!!errors.username}
-            />
-            <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
-            <Form.Control.Feedback type="valid">Password correct!</Form.Control.Feedback>
-
-          </Form.Group>
-          <Form.Group as={Col} md="12" controlId="validationCustom02">
-            <Form.Label>{t("userPassword")}</Form.Label>
-            <Form.Control
-              required
-              type="password"
-              placeholder="Last name"
-              value={form.userpassword}
-              onChange={e => setField('userpassword', e.target.value) }
-              isInvalid={!!errors.userpassword}
-
-            />
-            <Form.Control.Feedback type="invalid">{errors.userpassword}</Form.Control.Feedback>
-
-            {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-          </Form.Group>
-        <Button
-        className={cls.submitBtn} 
-        onClick={(e) => handleSubmit(e)} type="submit">Submit form</Button>
-      </Form>
-    :formType == "loginForm" ?
       <Form>
-        <h1>{t("authorizationFormName")}</h1>
-        <Form.Group as={Col} md="12" controlId="validationCustom04">
-          <Form.Label>{t("userName")}</Form.Label>
+        <h1>{currencyData.text}</h1>
+        <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Select 
+            options={currenciesSelect1List} 
+            value={selectCurrencyValue} 
+            onChange={(e:any) =>changeCurrency(e)} 
+            defaultValue={"select currency:"} 
+          />
           <Form.Control
             required
-            type="email"
-            placeholder="test@gmail.com"
+            type="number"
+            placeholder="Example: 2.45"
             value={form.username}
-            onChange={e => setField('username', e.target.value) }
+            onChange={(e) => setField("username", e.target.value)}
             isInvalid={!!errors.username}
           />
-          <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            {errors.username}
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group as={Col} md="12" controlId="validationCustom02">
-          <Form.Label>{t("userPassword")}</Form.Label>
+        <Select 
+            options={currenciesSelect2List} 
+            value={selectCurrencyValue2} 
+            onChange={(e:any) =>changeCurrency2(e)} 
+            defaultValue={"select currency"} 
+          />
           <Form.Control
             required
-            type="password"
-            placeholder="Last name"
+            type="pumber"
+            placeholder="Example: 4.5"
             value={form.userpassword}
-            onChange={e => setField('userpassword', e.target.value) }
+            onChange={(e) => setField("userpassword", e.target.value)}
             isInvalid={!!errors.userpassword}
-
           />
-          <Form.Control.Feedback type="invalid">{errors.userpassword}</Form.Control.Feedback>
-
-          {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+          <Form.Control.Feedback type="invalid">
+            {errors.userpassword}
+          </Form.Control.Feedback>
         </Form.Group>
-      <Button
-      className={cls.submitBtn} 
-      onClick={(e) => handleSubmit(e)} type="submit">{t("LoginLink")}</Button>
-    </Form>
-        :null
-    }
-
-
-    </> 
-    );
-})
- 
+      </Form>
+    </>
+  );
+});
